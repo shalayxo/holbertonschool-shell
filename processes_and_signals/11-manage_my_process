@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+#whatever you want it to be
+
+UGHHH=/var/run/my_process.pid
+
+case "$1" in
+
+        start)
+
+                ./manage_my_process &
+
+                echo $! > $UGHHH
+
+                echo "manage_my_process started"
+
+                ;;
+
+        stop)
+
+                kill "$(cat $UGHHH)"
+
+                rm $UGHHH
+
+                echo "manage_my_process stopped"
+
+                ;;
+
+        restart)
+
+                kill "$(cat $UGHHH)"
+
+                rm $UGHHH
+
+                ./manage_my_process &
+
+                echo $! > $UGHHH
+
+                echo "manage_my_process restarted"
+
+                ;;
+
+        *)
+
+                echo "Usage: manage_my_process {start|stop|restart}"
+
+esac
